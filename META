@@ -1,0 +1,5 @@
+description = "Small functions one can't live without"
+version = "1"
+requires = "unix"
+archive(byte) = "bricabrac.cma"
+archive(native) = "bricabrac.cmxa"

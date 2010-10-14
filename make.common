@@ -1,0 +1,39 @@
+OCAMLC     = OCAMLPATH=$(OCAMLPATH) ocamlfind ocamlc -thread
+OCAMLOPT   = OCAMLPATH=$(OCAMLPATH) ocamlfind ocamlopt -thread
+OCAMLDEP   = OCAMLPATH=$(OCAMLPATH) ocamlfind ocamldep
+INCS       =
+OCAMLOPTFLAGS = $(INCS) -w Ae -g
+OCAMLFLAGS    = $(INCS) -w Ae -g
+
+CAMLINCLUDE = $(shell ocamlfind printconf stdlib)
+CPPFLAGS += -I $(CAMLINCLUDE) -I .
+CFLAGS += -std=c99 -W -Wall
+
+# Common rules
+.SUFFIXES: .ml .mli .cmo .cmi .cmx
+# Rules for these are given in a case by case basis
+.SUFFIXES: .byte .opt
+
+.ml.cmo:
+	$(OCAMLC) -package "$(REQUIRES)" $(OCAMLFLAGS) -c $<
+
+.mli.cmi:
+	$(OCAMLC) -package "$(REQUIRES)" $(OCAMLFLAGS) -c $<
+
+.ml.cmx:
+	$(OCAMLOPT) -package "$(REQUIRES)" $(OCAMLOPTFLAGS) -c $<
+
+ML_OBJS  = $(ML_SOURCES:.ml=.cmo)
+ML_XOBJS = $(ML_SOURCES:.ml=.cmx)
+
+# Clean up
+.PHONY: clean clean-spec
+clean: clean-spec
+	rm -f *.cm[ioxa] *.cmxa *.a *.s *.o *.byte *.opt .depend
+
+# Dependencies
+.depend: $(ML_SOURCES) $(C_SOURCES)
+	$(OCAMLDEP) -package "$(REQUIRES)" -I .. $(ML_SOURCES) > $@
+ifdef C_SOURCES
+	$(CC) -M $(CPPFLAGS) $(C_SOURCES) >> $@
+endif
