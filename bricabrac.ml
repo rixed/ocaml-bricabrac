@@ -10,6 +10,10 @@ let compose f g = fun x -> f (g x)
 
 let forever f x = while true do f x done
 
+let nop () = ()
+
+let delay f x = fun () -> f x
+
 let try_finalize f x finally y =
   let res =
     try f x with exn ->
