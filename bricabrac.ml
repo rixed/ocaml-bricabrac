@@ -12,7 +12,7 @@ let forever f x = while true do f x done
 
 let nop () = ()
 
-let delay f x = fun () -> f x
+let eta f x = fun () -> f x
 
 let try_finalize f x finally y =
   let res =
@@ -71,4 +71,6 @@ let list_init n f =
       aux (f () :: prevs) (n - 1) in
     aux [] n
 
+let delay s =
+	ignore_exceptions ignore (Unix.select [] [] [] s)
 
