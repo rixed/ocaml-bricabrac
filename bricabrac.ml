@@ -72,5 +72,5 @@ let list_init n f =
     aux [] n
 
 let delay s =
-	ignore_exceptions ignore (Unix.select [] [] [] s)
+	ignore_exceptions (Unix.select [] [] []) s
 
