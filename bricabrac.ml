@@ -74,5 +74,7 @@ let list_init n f =
 let delay s =
 	ignore_exceptions (Unix.select [] [] []) s
 
+let id x = x
+
 (* Taken from Jane Street's Lib *)
 let ( |! ) x f = f x
