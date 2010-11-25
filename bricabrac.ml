@@ -14,6 +14,9 @@ let nop () = ()
 
 let eta f x = fun () -> f x
 
+let pair a b = a, b
+let triplet a b c = a, b, c
+
 let try_finalize f x finally y =
   let res =
     try f x with exn ->
