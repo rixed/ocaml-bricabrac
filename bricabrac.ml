@@ -8,14 +8,11 @@ let may o f = match o with
 
 let compose f g = fun x -> f (g x)
 
-let forever f x = while true do f x done
+let forever f x = ignore (while true do f x done)
 
 let nop () = ()
 
 let eta f x = fun () -> f x
-
-let pair a b = a, b
-let triplet a b c = a, b, c
 
 let try_finalize f x finally y =
   let res =
@@ -81,3 +78,17 @@ let id x = x
 
 (* Taken from Jane Street's Lib *)
 let ( |! ) x f = f x
+
+let ( |- ) f g = fun x -> g (f x)
+let ( ||- ) f g = fun x y -> g (f x y)
+
+
+let pair a b = a, b
+let triplet a b c = a, b, c
+let tuple3 a b c = a, b, c
+let tuple4 a b c d = a, b, c, d
+let tuple5 a b c d e = a, b, c, d, e
+let tuple6 a b c d e f = a, b, c, d, e, f
+let tuple7 a b c d e f g = a, b, c, d, e, f, g
+let tuple8 a b c d e f g h = a, b, c, d, e, f, g, h
+
