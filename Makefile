@@ -37,6 +37,5 @@ clean-spec:
 	$(MAKE) -C tests clean
 
 distclean: clean
-	@rm -f glop_spec.ml make.conf
 
 -include .depend

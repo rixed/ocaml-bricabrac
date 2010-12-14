@@ -92,3 +92,6 @@ let tuple6 a b c d e f = a, b, c, d, e, f
 let tuple7 a b c d e f g = a, b, c, d, e, f, g
 let tuple8 a b c d e f g h = a, b, c, d, e, f, g, h
 
+(* combine two arrays, with a1 length the shorter *)
+let array_zip f a1 a2 =
+	Array.init (Array.length a1) (fun i -> f a1.(i) a2.(i))
