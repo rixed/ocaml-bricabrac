@@ -6,6 +6,10 @@ let may o f = match o with
 	| Some x -> f x
 	| None -> ()
 
+let optdef o def = match o with
+	| Some x -> x
+	| None -> def
+
 let compose f g = fun x -> f (g x)
 
 let forever f x = ignore (while true do f x done)
@@ -71,6 +75,11 @@ let list_init n f =
       aux (f () :: prevs) (n - 1) in
     aux [] n
 
+let rec list_last = function
+	| [e] -> e
+	| _ :: l -> list_last l
+	| [] -> raise (Failure "list_last")
+
 let delay s =
 	ignore_exceptions (Unix.select [] [] []) s
 
@@ -95,3 +104,4 @@ let tuple8 a b c d e f g h = a, b, c, d, e, f, g, h
 (* combine two arrays, with a1 length the shorter *)
 let array_zip f a1 a2 =
 	Array.init (Array.length a1) (fun i -> f a1.(i) a2.(i))
+
