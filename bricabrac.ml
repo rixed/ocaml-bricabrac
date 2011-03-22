@@ -53,6 +53,15 @@ let string_split line delim =
       aux (substr :: strs) (next_i + 1) in
     aux [] 0
 
+let string_translate str a b =
+	let len = String.length str in
+	let ret = String.create len in
+	let char_at c =
+		try b.[ String.index a str.[c] ]
+		with Not_found -> str.[c] in
+	for c = 0 to len-1 do ret.[c] <- char_at c done ;
+	ret
+
 let rec join elt_to_string str list =
   match list with
     | [] -> ""
@@ -105,3 +114,17 @@ let tuple8 a b c d e f g h = a, b, c, d, e, f, g, h
 let array_zip f a1 a2 =
 	Array.init (Array.length a1) (fun i -> f a1.(i) a2.(i))
 
+(* Iter over a directory *)
+let foreach_file path f =
+	let dir = Unix.opendir path in
+	try
+		let next () =
+			let entry = Unix.readdir dir in
+			let fname = path ^ "/" ^ entry in
+			let stats = Unix.stat fname in
+			f fname stats in
+		forever next ()
+	with End_of_file -> ()
+
+let hashtbl_keys h = Hashtbl.fold (fun k _ l -> k::l) h []
+let hashtbl_values h = Hashtbl.fold (fun _ v l -> v::l) h []
