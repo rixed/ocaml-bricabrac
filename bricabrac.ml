@@ -128,3 +128,12 @@ let foreach_file path f =
 
 let hashtbl_keys h = Hashtbl.fold (fun k _ l -> k::l) h []
 let hashtbl_values h = Hashtbl.fold (fun _ v l -> v::l) h []
+
+let read_file filename = 
+	let lines = ref []
+	and ic = open_in filename in 
+	(try
+		forever (fun () -> lines := input_line ic :: !lines) ()
+	with End_of_file -> close_in ic) ;
+	List.rev !lines
+
