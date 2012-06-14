@@ -94,12 +94,9 @@ let delay s =
 
 let id x = x
 
-(* Taken from Jane Street's Lib *)
-let ( |! ) x f = f x
-
+let ( |> ) x f = f x
 let ( |- ) f g = fun x -> g (f x)
 let ( ||- ) f g = fun x y -> g (f x y)
-
 
 let pair a b = a, b
 let triplet a b c = a, b, c
