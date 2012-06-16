@@ -1,6 +1,7 @@
 OCAMLPATH = ..
 
-all: bricabrac.cma
+all: byte opt
+byte: bricabrac.cma
 opt: bricabrac.cmxa
 
 NAME = bricabrac
