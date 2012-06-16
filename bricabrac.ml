@@ -33,6 +33,14 @@ let with_mutex m f x =
 let with_fd fd f =
   try_finalize f fd Unix.close fd
 
+let with_file_in fname f =
+    let ic = open_in fname in
+    try_finalize f ic close_in ic
+
+let with_file_out ?(mode=[Open_wronly;Open_trunc;Open_creat]) ?(perm=0o644) fname f =
+    let oc = open_out_gen mode perm fname in
+    try_finalize f oc close_out oc
+
 let apply x f = f x
 
 let pi = 4. *. atan 1.
@@ -133,4 +141,18 @@ let read_file filename =
 		forever (fun () -> lines := input_line ic :: !lines) ()
 	with End_of_file -> close_in ic) ;
 	List.rev !lines
+
+let mkdir_all ?(is_file=false) dir =
+    let dir_exist d =
+        try Sys.is_directory d with Sys_error _ -> false in
+    let dir = if is_file then Filename.dirname dir else dir in
+    let rec ensure_exist d =
+        if String.length d > 0 && not (dir_exist d) then (
+            ensure_exist (Filename.dirname d) ;
+            try Unix.mkdir d 0o755
+            with Unix.Unix_error (Unix.EEXIST, "mkdir", _) ->
+                (* Happen when we have "somepath//someother" (dirname should handle this IMHO *)
+                ()
+        ) in
+    ensure_exist dir
 
