@@ -1,6 +1,7 @@
 *.cmi
 *.cmo
 *.cmx
+*.cmxs
 *.o
 .depend
 gmon.out
@@ -12,5 +13,6 @@ gmon.out
 *.a
 *.byte
 *.opt
+*.annot
 _build
 cscope.out

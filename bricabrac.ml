@@ -10,6 +10,14 @@ let optdef o def = match o with
 	| Some x -> x
 	| None -> def
 
+let optmap o f = match o with
+    | Some x -> Some (f x)
+    | None -> None
+
+let optbind o f = match o with
+    | Some x -> f x
+    | None -> None
+
 let compose f g = fun x -> f (g x)
 
 let forever f x = ignore (while true do f x done)
@@ -47,6 +55,9 @@ let pi = 4. *. atan 1.
 
 let ignore_exceptions f x =
   try ignore (f x) with _ -> ()
+
+let none_if_exception f x =
+  try Some (f x) with _ -> None
 
 let rec restart_on_EINTR f x =
   try f x with Unix.Unix_error (Unix.EINTR, _, _) ->

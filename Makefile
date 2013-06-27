@@ -1,5 +1,3 @@
-OCAMLPATH = ..
-
 all: byte opt
 byte: bricabrac.cma
 opt: bricabrac.cmxa
@@ -19,6 +17,9 @@ $(NAME).cma: $(ML_OBJS)
 
 $(NAME).cmxa: $(ML_XOBJS)
 	$(OCAMLOPT) -a -o $@ -package "$(REQUIRES)" $(OCAMLOPTFLAGS) $(ML_XOBJS)
+
+$(NAME).cmxs: $(ML_XOBJS)
+	$(OCAMLOPT) -shared -o $@ -package "$(REQUIRES)" $(OCAMLOPTFLAGS) $(ML_XOBJS)
 
 install: all
 	if test -f $(NAME).cmxa ; then extra="$(NAME).cmxa $(NAME).a" ; fi ; \
