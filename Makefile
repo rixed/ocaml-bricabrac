@@ -22,7 +22,7 @@ $(NAME).cmxs: $(ML_XOBJS)
 	$(OCAMLOPT) -shared -o $@ -package "$(REQUIRES)" $(OCAMLOPTFLAGS) $(ML_XOBJS)
 
 install: all
-	if test -f $(NAME).cmxa ; then extra="$(NAME).cmxa $(NAME).a" ; fi ; \
+	if test -f $(NAME).cmxa ; then extra="$(NAME).cmxa $(NAME).cmx $(NAME).a" ; fi ; \
 	ocamlfind install $(NAME) *.cmi $(NAME).cma META $$extra
 
 uninstall:
