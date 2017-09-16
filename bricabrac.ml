@@ -162,7 +162,7 @@ let mkdir_all ?(is_file=false) dir =
             ensure_exist (Filename.dirname d) ;
             try Unix.mkdir d 0o755
             with Unix.Unix_error (Unix.EEXIST, "mkdir", _) ->
-                (* Happen when we have "somepath//someother" (dirname should handle this IMHO *)
+                (* Happens when we have "somepath//someother" (dirname should handle this IMHO) *)
                 ()
         ) in
     ensure_exist dir
