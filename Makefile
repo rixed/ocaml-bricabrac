@@ -6,7 +6,7 @@ NAME = bricabrac
 
 ML_SOURCES = bricabrac.ml
 
-REQUIRES =
+REQUIRES = unix
 
 include make.common
 
